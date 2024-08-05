@@ -1,5 +1,6 @@
 import React from "react";
 import Navigation from "../../components/Navigation";
+import Button from 'react-bootstrap/Button';
 import { Plus } from "react-bootstrap-icons";
 import Card from "../../components/Card";
 
@@ -10,12 +11,11 @@ function Produk() {
       <div className="container mt-4">
         <div className="row">
           <div className="col-xl-12">
-            <button
-              type="button"
-              className="btn btn-primary d-flex align-items-center gap-2"
-            >
-              <Plus /> Produk
-            </button>
+            <div className="d-flex align-items-center justify-content-end">
+              <Button variant="primary" className="d-flex align-items-center gap-1">
+                <Plus /> Produk
+              </Button>
+            </div>
             {/* Table Produk */}
             <div className="table-responsive mt-4">
               <table className="table table-success border-0 text-center">

@@ -50,28 +50,28 @@ function Dashboard() {
   const handleAddCart = () => {
     document.getElementById("handleaddcart").disabled = true;
 
-    setTimeout(function() {
+    setTimeout(function () {
       const data = item.find(
         (value) => value.code.toLowerCase() === kode_produk.toLowerCase()
       );
-  
+
       if (data) {
         const existingCartItem = cart.find(
           (value) => value.kode_produk.toLowerCase() === kode_produk.toLowerCase()
         );
-  
+
         if (existingCartItem) {
           setCart(
             cart.map((value) =>
               value.kode_produk.toLowerCase() === kode_produk.toLowerCase()
                 ? {
-                    ...value,
-                    jumlah_produk:
-                      parseInt(value.jumlah_produk) + parseInt(jumlah_produk),
-                    total_harga:
-                      value.total_harga +
-                      parseInt(harga_produk) * parseInt(jumlah_produk),
-                  }
+                  ...value,
+                  jumlah_produk:
+                    parseInt(value.jumlah_produk) + parseInt(jumlah_produk),
+                  total_harga:
+                    value.total_harga +
+                    parseInt(harga_produk) * parseInt(jumlah_produk),
+                }
                 : value
             )
           );
@@ -90,7 +90,7 @@ function Dashboard() {
       else {
         swal("Opps", "Produk wajib diisi!", "warning");
       }
-  
+
       document.getElementById("handleaddcart").disabled = false;
     }, 1000)
   };
@@ -344,13 +344,13 @@ function Dashboard() {
                         <strong>
                           {cart.length > 0
                             ? cart
-                                .reduce((accumulator, currentValue) => {
-                                  return (
-                                    accumulator + currentValue.jumlah_produk
-                                  );
-                                }, 0)
-                                .toLocaleString()
-                                .replaceAll(",", ".")
+                              .reduce((accumulator, currentValue) => {
+                                return (
+                                  accumulator + currentValue.jumlah_produk
+                                );
+                              }, 0)
+                              .toLocaleString()
+                              .replaceAll(",", ".")
                             : "0"}
                         </strong>
                       </td>
@@ -365,11 +365,11 @@ function Dashboard() {
                           RP.{" "}
                           {cart.length > 0
                             ? cart
-                                .reduce((accumulator, currentValue) => {
-                                  return accumulator + currentValue.total_harga;
-                                }, 0)
-                                .toLocaleString()
-                                .replaceAll(",", ".")
+                              .reduce((accumulator, currentValue) => {
+                                return accumulator + currentValue.total_harga;
+                              }, 0)
+                              .toLocaleString()
+                              .replaceAll(",", ".")
                             : "0"}
                         </strong>
                       </td>
