@@ -21,5 +21,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/products', [ProductMainController::class, 'index']);
-Route::get('/category', [CategoryMainController::class, 'index']);
+Route::post('/category/datatable', [CategoryMainController::class, 'index']);
 Route::post('/category', [CategoryMainController::class, 'create']);

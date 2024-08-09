@@ -7,6 +7,7 @@ import { Pen, Plus, Send, Trash } from "react-bootstrap-icons";
 import swal from 'sweetalert';
 import classNames from 'classnames';
 import DataTable from 'react-data-table-component';
+import moment, { max } from 'moment'
 
 export const API_URL = process.env.REACT_APP_API_URL;
 
@@ -16,6 +17,8 @@ function Kategori() {
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({ category: '', jumlah: '' });
   const [errors, setErrors] = useState([]);
+  const [minDate, setMinDate] = useState(moment().format('YYYY-MM-DD'));
+  const [maxDate, setMaxDate] = useState(moment().format('YYYY-MM-DD'));
 
   const handleClose = () => {
     setShow(false);
@@ -63,13 +66,16 @@ function Kategori() {
 
   useEffect(() => {
     getUser()
-  }, [])
+  }, [minDate, maxDate])
 
   // get data category
   async function getUser() {
     setLoading(true);
     try {
-      const response = await axios.get(`${API_URL}/api/category`);
+      const response = await axios.post(`${API_URL}/api/category/datatable`, {
+        minDate: minDate, // Sesuaikan dengan struktur request body API Anda
+        maxDate: maxDate,
+      });
       setData(response.data.data);
     } catch (error) {
       console.error(error);
@@ -108,6 +114,11 @@ function Kategori() {
     {
       name: 'No',
       selector: (row, i) => i + 1,
+      sortable: true,
+    },
+    {
+      name: 'Tanggal Dibuat',
+      selector: row => moment(row.created_at).format('YYYY-MM-DD'),
       sortable: true,
     },
     {
@@ -168,9 +179,20 @@ function Kategori() {
               </table>
             </div> */}
             <h3 className="m-0 mb-4">Daftar Kategori</h3>
+            <div className="row mb-3">
+              <div className="col-lg-6">
+                <label className="form-label">Min</label>
+                <input type="date" className="form-control" name="min" value={minDate} onChange={(e) => setMinDate(e.target.value)} />
+              </div>
+              <div className="col-lg-6">
+                <label className="form-label">Min</label>
+                <input type="date" className="form-control" name="min" value={maxDate} onChange={(e) => setMaxDate(e.target.value)} />
+              </div>
+            </div>
             <DataTable
               columns={columns}
               data={data}
+              progressPending={loading} 
               pagination
             />
           </div>

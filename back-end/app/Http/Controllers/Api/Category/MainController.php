@@ -13,7 +13,14 @@ class MainController extends Controller
 {
     public function index()
     {
-        $category = Category::all();
+        $minDate = request()->input('minDate');
+        $maxDate = request()->input('maxDate');
+
+        $category = Category::when($minDate, function ($query, $minDate) {
+            $query->whereDate('created_at', '>=', $minDate);
+        })->when($maxDate, function ($query, $maxDate) {
+            $query->whereDate('created_at', '<=', $maxDate);
+        })->get();
 
         $response = [
             'status' => 200,
